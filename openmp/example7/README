@@ -9,6 +9,15 @@ A number of useful documents for further reading are on openmp.org:
 http://openmp.org/mp-documents/OpenMP-4.0-C.pdf
 http://openmp.org/mp-documents/OpenMP4.0.0.Examples.pdf
 
+To compile the programs below, you will need the Intel compiler.  I would
+recommend thye following module:
+  module add languages/intel-compiler-16
+
+To run the code on an accelerator, you'll need access to an Intel accelerator
+(xeon-phi aka MIC).  You can get an interactive session on a node equiped with
+an appropriate accelerator by typing:
+  qsub -q testq -I -l nodes=1:ppn=16:xeon-phi
+ 
 query
 =====
 
