@@ -1,0 +1,28 @@
+========
+Example7
+========
+
+In this directory we find some example programs that make use of new
+features available in OpenMP 4.0.
+
+A number of useful documents for further reading are on openmp.org: 
+http://openmp.org/mp-documents/OpenMP-4.0-C.pdf
+http://openmp.org/mp-documents/OpenMP4.0.0.Examples.pdf
+
+query
+=====
+
+This program discovers the number of threads on the host and any accelerator
+devices that may exist.
+
+saxpy-serial
+============
+
+Serial code to compute the saxpy (constant times a vector, plus a vector)
+operation.
+
+saxpy-mic
+=========
+
+OpenMP 4.0 code to compute the saxpy (constant times a vector, plus a vector)
+operation, with offload to a accelerator (MIC).

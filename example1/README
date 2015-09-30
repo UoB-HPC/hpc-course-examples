@@ -1,0 +1,89 @@
+========
+Example1
+========
+
+We begin our OpenMP examples with, of course, the quintessential, "hello, world" program.
+
+OpenMP is available to C, C++ and Fortran programmers.  I've included C and Fortran90
+versions in this directory.  These can be contrasted with a similar program written using
+POSIX threads directly.
+
+Type 'make' to create the executables.  I have also included a submission script for use
+on the cluster, called openmp_submit.  You can submit a job to the cluster's queue by typing:
+
+  qsub openmp_submit
+
+You can monitor your job's progress through the queue using the 'qstat' command, e.g.:
+
+  qstat -n -u <your-username>
+
+This will give you information such as the job ID, the queue holding your job and whether
+the job is running (R) or queued (Q).  If the job is running, the above command will also
+show which of the cluster's compute node(s) your job is running on.
+
+Since you are using a linux cluster, you can type:
+
+  man qsub
+
+to learn more about the qsub command, and the various options that it accepts.
+
+Other commands that you will find useful include:
+
+  - qdel   (for deleting jobs you no longer wish to run)
+  - qalter (to change some attributes, such as the resource request of a queued job)  
+
+If you examine the submission script (openmp_submit), you will see #PBS directives, which
+are read by the 'qsub' command.  For example, you will see:
+
+#PBS -N OPENMP
+#PBS -o OUT
+#PBS -q teaching
+#PBS -l nodes=1:ppn=4,walltime=00:05:00
+
+These directives have their counterparts on the command line, when you envoke qsub.
+'-N' gives your job a specified name in the queue.  '-o' specifies the name of the file
+which captures output streams (e.g. stdout) for your job.  '-q' specifies the name of the
+queue to which your job will be sent.  The cluster maintains a number of queues (use 
+'qstat -q' to view them.)  Lastly '-l' is used to specify the resource request.  In this
+case, 4 cores on a single compute node for a total of 5 minutes of wallclock (elapsed) time.
+Any command-line options take precedence over those in the script itself.
+
+Within the submission script, edit the line:
+
+  application="./hello_c.exe"
+
+to change which executable is run by your job.
+
+========================================
+More Information about using the Cluster
+========================================
+
+Below are a number of links pointing to further sources of information to help you get
+to grips with using the cluster.
+
+A concise quick reference card (which you can print on a single shhet of A4) is:
+  https://www.acrc.bris.ac.uk/acrc/pdf/BlueCrystalRefCard2.pdf
+
+Much more information, including details of how to transfer files to and from the
+cluster, see the user guide:
+  https://www.acrc.bris.ac.uk/acrc/pdf/bc-user-guide-june15.pdf
+
+The cluster uses environment modules.  To gain access, to e.g. a certain compiler,
+tool, or application, you will need to 'load' the relevant modules.  See:
+  https://www.acrc.bris.ac.uk/acrc/pdf/customising-environment-variables.pdf
+for more details.
+
+A common question is what text editor can you use on the cluster.  I use emacs, and
+a quick reference for emacs's key-strokes is here: 
+  https://www.acrc.bris.ac.uk/acrc/pdf/emacs.pdf
+
+For more information about various compiler flags, see:
+  https://www.acrc.bris.ac.uk/acrc/pdf/compiler-flags.pdf
+
+And for step-by-step examples using Intel's Vtune profiler, see:
+  https://www.acrc.bris.ac.uk/acrc/pdf/vtune.pdf
+
+If you'd like to learn more about the queuing system, the definitive guide is:
+  http://docs.adaptivecomputing.com/torque/5-1-1/torqueAdminGuide-5.1.1.pdf
+See:
+  "Chapter 3 Submitting and Managing Jobs"

@@ -1,0 +1,108 @@
+========
+Example2
+========
+
+In this directory, we encounter several programs to estimate the value of pi.
+We will see an evolution from serial code to OpenMP parallel code, highlighting
+the common pitfalls of 'cache-thrashing' and 'false sharing' along the way.
+
+serial_pi
+=========
+
+- Try varying the value of num_steps and see the effect upon run-time and the
+  magnitude in the error in estimating pi.
+- The 'time' command is a useful tool for rough-and-ready timings, e.g.:
+> time ./serial_pi.exe
+
+parallel_shared_pi
+==================
+
+Here we see what happens if we share an accumulator over multiple threads.
+> time ./parallel_shared_pi.exe
+reveals the full horror of the cache-thrashing and the pain associated with
+acquiring and releasing all the locks in the critical region (mutex).
+Try experimenting with the number of threads used.  The problem just gets
+worse as we move from 4 to 8 to 16 threads.
+
+parallel_array_pi
+=================
+
+This program is an attempt to correct the cache-thrashing but falls foul of
+the pitfall of 'false-sharing', as although the different threads use diffent
+cells of the array as accumulators, the whole array is small and can end up
+in cache and so coherency must be maintained.  On my two-core laptop, this
+program is still slower than the serial code.  See how it goes for you on the
+cluster.
+
+parallel_private_pi
+===================
+
+In this program we have finally corrected our mistakes and have declared
+an accumulator that is private to each thread.  We are rewarded by a
+corresponding reduction in the overall runtime.  A speed-up of just shy of 2
+on my Centrino duo laptop.  Again, see what is possible on a node of the
+cluster.  A good exercise is to experiment with different values of the
+OMP_NUM_THREADS environment variable and to plot runtimes against the number
+of threads used.  The result may surprise you.  If it does, think about what
+work is available to do and how many threads that can profitably be shared
+amongst.  What are the overheads in adding more threads to the calculation.
+
+NB Be sure to adjust the resource request in your submission script to match
+any changes you make to OMP_NUM_THREADS--if you want your threads to have
+their own processor core. 
+
+reduction_pi
+============
+
+Last but not least is a version which uses a 'reduction'.  This approach is
+the most elegant and offers the best potential for scaling /the accumulator
+part of the code/ over a larger number of cores.  Compare the runtimes for this
+approach with those for the previous program.
+
+Starting to Profile your code
+=============================
+
+Since these programs are very small, the rough timings and differences in the code
+are sufficient to tell us what is going on.  However, as your code gets more
+complex, you will want to avail yourself of wonderful world of profilers.
+
+We have several installed on BCp3 and I have highlighted two below: Intel's VTune
+and the open source TAU. 
+
+Intel's VTune Profiler
+----------------------
+
+In order to make use of this tool, you will need to add the following module:
+
+module add intel-cluster-studio/vtune/vtune-2015
+
+NB You will need to either add the above line to your .bashrc, or your job
+submission script, if you want to use the profiler in a job submitted to the
+queuing system.
+
+You can use the following command to run a basic, "hotspots" profile:
+  amplxe-cl -quiet -collect hotspots -result-dir r001hs ./parallel_array_pi.exe
+
+Once the job has run, you can view the gathered information by pointing the GUI:
+  amplxe-gui
+to your results files (stored in a subdir of the experiment directory).
+
+You can find more detailed instructions for using the profiler on the cluster at:
+  https://www.acrc.bris.ac.uk/acrc/pdf/vtune.pdf
+
+As an example of the output, I have included two screenshots, which clearly show
+where the bulk of the time was spent for two of the programs:
+  parallel_array_pi.png
+  parallel_private_pi.png
+
+
+TAU
+---
+
+Alernatively, to use TAU, load the following module:
+ 
+module add tools/gnu_builds/tau-2.23.1-openmp
+
+See the slides for the tools lecture, or 
+http://www.cs.uoregon.edu/research/tau/tau-usersguide.pdf
+for more information on running TAU.

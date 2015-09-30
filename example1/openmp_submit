@@ -1,0 +1,38 @@
+#!/bin/bash 
+
+#PBS -N OPENMP
+#PBS -o OUT
+#PBS -q teaching
+#PBS -l nodes=1:ppn=4,walltime=00:05:00
+
+#! Mail to user if job aborts
+#PBS -m a
+
+#! application name
+application="./hello_c.exe"
+
+#! Run options for the application
+options=""
+
+###############################################################
+### You should not have to change anything below this line ####
+###############################################################
+
+#! change the working directory (default is home directory)
+
+cd $PBS_O_WORKDIR
+
+echo Running on host `hostname`
+echo Time is `date`
+echo Directory is `pwd`
+echo PBS job ID is $PBS_JOBID
+echo This jobs runs on the following machines:
+echo `cat $PBS_NODEFILE | uniq`
+ 
+numnodes=`wc $PBS_NODEFILE | awk '{ print $1 }'`
+
+export OMP_NUM_THREADS=$numnodes
+
+#! Run the executable
+$application $options
+
