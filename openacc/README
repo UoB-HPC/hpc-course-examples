@@ -1,0 +1,9 @@
+
+OpenACC
+=======
+
+This directory contains an example program that uses OpenACC directives.
+
+OpenACC requires the PGI C compiler v12.x--preferably 12.6--or above.
+to use the PGI compiler on BCp3:
+  module add pgi/64/13.5
