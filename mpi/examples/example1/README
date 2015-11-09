@@ -1,0 +1,39 @@
+========
+Example1
+========
+
+Welcome to the MPI programming examples!
+
+In this directory we start, again, with "hello, world."
+MPI libraries can be used with several languages.  Here
+we have programs written in C, C++, Fortran77 and Fortran90.
+
+**NB**  Loading multiple MPI related modules could cause
+unpredictable behaviour and runtime errors (as mpirun from
+one module can end up being called with executables created
+with compilers from another).
+
+For simplicity just load the modules associated with one
+of the compilers below, at any one time, e.g.
+
+For the GNU compiler:
+  module add openmpi/gcc/64/1.6.5
+  module add tools/gnu_builds/tau-2.23.1-openmpi
+
+For the Intel compiler:
+  module add openmpi/intel/64/1.6.5
+  module add tools/intel_builds/tau-2.23.1-openmpi
+
+Compiler independent:
+  module add intel-cluster-studio/vtune/vtune-2015
+
+If you wish to experiment with the Intel MPI libraries,
+take note of the following:
+- You will need to load an Intel compiler module as well
+  as the MPI module, e.g.
+    module add intel-cluster-studio/compiler/64/13.1/117
+    module add intel-mpi/64/4.1.0/024
+- Use mpicc to invoke the GNU compiler, linking with the
+  Intel (MPICH-based) MPI library.
+- Use mpiicc to invoke the Intel compiler, linking with
+  the Intel (MPICH-based) MPI library.

@@ -1,0 +1,40 @@
+
+Up until now, all of our programs have used a single, defualt
+communicator--MPI_COMM_WORLD--which contains all the processes
+used to launch the MPI program.
+
+It is possible to partition the processes amongst different
+communicators, however, and this directory contains two
+programs which demonstate the operations involved.
+
+It may be convenient to divide the available processes among
+two different communicators if, for instance, the two groups
+are doing radically different jobs.  For example, in a climate
+model, one might arrange for one group of processes to work on
+the atmospheric calculations, while another simulates the
+oceans.  Having groups of processors grouped between different
+communicators allows for collective operations to be called on
+a subset of all the processes.
+
+split
+=====
+
+In this program, we split the processes within MPI_COMM_WORLD
+into three subsets, using the MPI_Comm_split() function.
+Membership of these new subsets is determined by a 'key'.
+The variable called 'colour' acts as our key and can have
+one of three values, 0, 1 or 2, computed from the processes' 
+rank in MPI_COMM_WORLD.  All the processes with colour '0'
+get put into one of the new groups.  All the  processes with 
+colour '1' in another, and so on.
+
+group_to_comm
+=============
+
+In this program we create two new communicators via a slightly
+different approach.  First we extract a group object from the
+default communicator--MPI_COMM_WORLD--using the function
+MPI_Comm_group().  Then we call the collective operation
+MPI_Group_incl() to set up two new groups, and finally we
+make two new communicators for the two new groups, using
+MPI_Comm_create().

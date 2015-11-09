@@ -1,0 +1,17 @@
+============
+MPI examples
+============
+
+example1:  "Hello, world" code for MPI.
+example2:  First, pointo-to-point, message passing examples. 
+	   An example of some deadlocking (blocking MPI_Recv) code is included.
+example3:  Numerical integration examples, which highlight choice of cohort size.
+example4:  Examples contrasting blocking and non-blocking function calls.
+example5:  Collective communication.
+example6:  Making composite messages to send (possibly to reduce traffic).
+example7:  MPI file I/0.
+example8:  One-sided (RMA) communications.
+example9:  Multiple communicators.
+example10: Spawning new processes on the fly.
+example11: Communication pattern skeletons including an example HALO EXCHANGE.
+
