@@ -19,7 +19,6 @@ int main(int argc,char* argv[])
   int count;
   int colour;               /* subgroups are comprised of processes of the same colour */
 
-  MPI_Group new_group;      /* new group, to be created */
   MPI_Comm  new_comm;       /* new communicator, to be created */
 
   /* standard startup */
@@ -49,11 +48,8 @@ int main(int argc,char* argv[])
   ** thrird, 'key' argument. */ 
   MPI_Comm_split(MPI_COMM_WORLD, colour, rank, &new_comm);
 
-  /* extract opaque group object from the new communicator */
-  MPI_Comm_group(new_comm, &new_group);
-
-  /* get rank in new group */
-  MPI_Group_rank (new_group, &new_rank); 
+  /* get rank in new communicator */
+  MPI_Comm_rank(new_comm, &new_rank);
 
   /* Total the ranks--as associated with MPI_COMM_WORLD--within the newer,
   ** smaller communicators */
