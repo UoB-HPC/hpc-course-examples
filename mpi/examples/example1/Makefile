@@ -16,7 +16,6 @@ endif
 
 EXES=hello_world_c hello_world_f77 hello_world_f90 hello_world_c++
 
-all: $(EXES)
 
 hello_world_c: hello_world.c
 	$(CC) $(CFLAGS) -o $@ $^
@@ -29,6 +28,8 @@ hello_world_f90: hello_world.f90
 
 hello_world_c++: hello_world.cc
 	$(CXX) $(CFLAGS) -o $@ $^
+
+all: $(EXES)
 
 .PHONY: clean all
 
