@@ -3,9 +3,9 @@ Example 1: Hello, world
 
 Welcome to the MPI programming examples!
 
-In this directory we start, again, with "hello, world".
+In this directory we start, again, with "Hello, world".
 MPI libraries can be used with several languages.
-Here we have programs written in C, C++, Fortran77 and Fortran90.
+Here we have a program written in C, and [an advanced example](../advanced/example13/) has programs in C++, Fortran77 and Fortran90.
 
 **Note**: Loading multiple MPI related modules could cause
 unpredictable behaviour and runtime errors (as `mpirun` from
