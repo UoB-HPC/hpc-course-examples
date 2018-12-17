@@ -1,35 +1,35 @@
+Example 3: Numerical Integration Examples
+=========================================
 
 This directory contains numerical integration programs which estimate the value
-of a function--in this case pi.
+of a function—in this case pi.
 
 serial_trapezoid
-================
+----------------
 
 A serial code version of the classic trapezoidal approach to numerical integration.
 The area under a curve is divided into trapeziums, where the area of those each 
 geometric shapes is easy to compute.  The area under the curve is then estimated
 as the total of the area of the trapeziums.
 
-exercise
---------
+### Exercise
 
 Investigate the effect of varying the number of trapezoids on the accuracy of 
 the estimate and the runtime.
 
 send_trapezoid
-==============
+--------------
 
 The trapezoidal approach is clearly ripe for parallelisation as nothing is
 preventing us from assigning a swathe of trapeziums to different processors,
 they compute the area of their local region and then we can accumulate all
 the sub-totals at the end.
 
-This program evenly divides up the work among the N processors available--
-Note that the master process is also given work to do--and then the sub-totals
+This program evenly divides up the work among the N processors available—
+note that the master process is also given work to do—and then the sub-totals
 are sent back to the master, prior to the final summation.
 
-exercise
---------
+### Exercise
 
 Since there is very little communication between the processes, we would expect
 a linear scaling of performance as we increase the number of processors, right?
@@ -39,7 +39,7 @@ number of processors requested?  Are there ways in which we can improve the code
 to deal with this?
 
 dartboard_pi_send
-=================
+-----------------
 
 In the trapezoid approach, each processor was responsible for a portion of the
 area under a curve.  What would happen if one (or more) of those processors
@@ -51,15 +51,14 @@ compensates (perhaps you'd like to try writing some code for this?), middling is
 the program deadlocks or crashes.  The worst case scenario is that the program
 runs to completion, but gives erroneous output.
 
-This is, however, a different approach.  Programs based on randomly selected trials--
-the so called, 'monte carlo' approach--are inherently robust to problems such as
-processor failure.  This program uses a monte carlo algorithm--the dartbaord
-algorithm--to produce an estimate of pi.
+This is, however, a different approach.  Programs based on randomly selected trials—
+the so called, 'monte carlo' approach—are inherently robust to problems such as
+processor failure.  This program uses a monte carlo algorithm—the dartbaord
+algorithm—to produce an estimate of pi.
 
-Note the use of MPI_ANY_SOURCE in the call the MPI_Recv().
+Note the use of `MPI_ANY_SOURCE` in the call the `MPI_Recv()`.
 
-exercise
---------
+### Exercise
 
 How well does this program perform compared to the trapezoid appraoch?  What
 are the pros and cons?  For example, given a random number generator, are we

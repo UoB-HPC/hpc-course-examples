@@ -1,8 +1,10 @@
+Example 5: Collective Communication
+===================================
 
 This directory contains programs which use collective communication functions.
 
 broadcast
-=========
+---------
 
 In this scenario, we would like to send some information from the
 master process to all the other processes in the communicator.
@@ -14,8 +16,7 @@ This program contrasts the time taken to achieve this using a
 series of point-to-point communications against that used by one
 collective 'broadcast' operation. 
 
-exercise
---------
+### Exercise
 
 Run the program several times using different numbers of processors
 and plot how the communication times scale over an increasing number
@@ -23,10 +24,10 @@ of processors in the communicator.
 
 
 reduce_trapezoid
-================
+----------------
 
 Another common scenario is one in which each process has computed a
-value which we would like to combine in some way--add, multiply,
+value which we would like to combine in some way—add, multiply,
 divide etc.
 
 In this program we revisit the trapezoidal approach to numerical
@@ -37,9 +38,9 @@ but more efficiently.
 
 
 scatter_gather
-==============
+--------------
 
-This last program demonstrates two more collective operations--
+This last program demonstrates two more collective operations—
 'scatter' and 'gather.
 
 The call to scatter chunks up a send buffer on one of the
@@ -50,8 +51,7 @@ The call to gather takes chunks from all the other processes
 and collates them into a single buffer on the root process,
 i.e. it performs a mirror image of the scatter operation.
 
-exercise
---------
+### Exercise
 
 Our master send buffer contains a line from Macbeth, which
 is 66 characters long.  Pay close attention to the contents of

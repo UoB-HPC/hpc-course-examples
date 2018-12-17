@@ -1,3 +1,5 @@
+Example 8: One-sided Communication
+==================================
 
 This directory is concerned with one-sided communications,
 also known as RMA (Remote Memory Access) operations, which
@@ -17,7 +19,7 @@ Advantage to this approach include:
 
 
 rma-trapezoid
-=============
+-------------
 
 In this program we fall back on the now very familar task of 
 numerical integration.  However, in this case we arrange for
@@ -28,25 +30,24 @@ separating two processes, but this is hidden from the programmer
 in the case of an RMA operation.)
 
 First memory windows are created on various processes, using
-MPI_Win_create(). In this program we only need expose variables
+`MPI_Win_create()`. In this program we only need expose variables
 owned by the the master process.  Note, that all processes must 
-call MPI_Win_create(), as it is a collective operation, but that
+call `MPI_Win_create()`, as it is a collective operation, but that
 all processes other than the master declare a window of size
 zero.
 
 If a process desires to read a value for a variable from a window
-it must call MPI_Get().  However, this call must be enclosed by a
+it must call `MPI_Get()`.  However, this call must be enclosed by a
 pair of calls to MPI_Win_fence().  These calls are again
 collective and act to synchronise the processes.
 
-MPI_Put() operations are, of course, also possible.  However in
+`MPI_Put()` operations are, of course, also possible.  However in
 this case we desire to accumulate our sub-totals and obligingly
-MPI-2 offers us the MPI_Accumlate() function, again bookended
-by synchronising calls to MPI_Win_fence().
+MPI-2 offers us the `MPI_Accumlate()` function, again bookended
+by synchronising calls to `MPI_Win_fence()`.
 
-exercise
-========
+### Exercise
 
 - Devise a program to verify whether or not the second call to 
-  MPI_Win_fence() in an RMA access epoch acts like a barrier call,
-  MPI_Barrier().
+  `MPI_Win_fence()` in an RMA access epoch acts like a barrier call,
+  `MPI_Barrier()`.

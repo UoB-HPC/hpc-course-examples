@@ -1,3 +1,5 @@
+Example 6: Composite messages
+=============================
 
 Sending many messages between processes can significantly
 slow your programs.  Especially if the communications network
@@ -26,7 +28,7 @@ must be taken.  Pitfalls include:
    by sending the information piece-meal.
 
 pack-unpack
-===========
+-----------
 
 Here we pack variables into a single message buffer on the
 sending process and unpack them on the receiving process.
@@ -38,7 +40,7 @@ expensive than its alternative should a similar message
 be sent several times in a program. 
 
 derived-type
-============
+------------
 
 This approach requires more setup but is compuationally
 more efficient if used several times and is less error
@@ -48,13 +50,12 @@ it's constituent parts.
 The derived-type is based around the offsets in memory
 between the storage locations of the variables concerned.
 
-The function MPI_Address() is provided so that the offsets
-can be reliably computed--pointer arithmetic is not strictly
+The function `MPI_Address()` is provided so that the offsets
+can be reliably computed—pointer arithmetic is not strictly
 guaranteed outside of the same array.
 
-exercise
-========
+### Exercise
 
 Devise programs which employ the other methods of constructing user-derived types:
-- MPI_Type_contiguous()
-- MPI_Type_indexed()
+- `MPI_Type_contiguous()`
+- `MPI_Type_indexed()`
