@@ -4,7 +4,7 @@ Example 7: MPI File I/O
 This directory concerns file input and output.
 
 MPI-1 did not contain any functions for file I/O.  However,
-MPI-2 contains a number of functions which accomodate
+MPI-2 contains a number of functions which accommodate
 parallel access to files.
 
 file-io
@@ -17,7 +17,7 @@ they can operate.  I have set the window to be 10 characters
 wide and to be offset from the start of the file by 10x the
 rank of the process, in bytes.
 
-### Exercies
+### Exercises
 
 Inspect the contents of `myfile` as you vary the processor
 count.
@@ -33,4 +33,4 @@ count.
 
 - Experiment with the use of shared file pointers so that each process can
   read the same data from the same file:
-  `MPI_File_read_shared()`
+  `MPI_File_read_shared()`.

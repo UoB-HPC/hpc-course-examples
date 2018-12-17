@@ -8,13 +8,14 @@ serial_trapezoid
 ----------------
 
 A serial code version of the classic trapezoidal approach to numerical integration.
-The area under a curve is divided into trapeziums, where the area of those each 
-geometric shapes is easy to compute.  The area under the curve is then estimated
+The area under a curve is divided into trapeziums, where the area of those each
+geometric shapes is easy to compute.
+The area under the curve is then estimated
 as the total of the area of the trapeziums.
 
 ### Exercise
 
-Investigate the effect of varying the number of trapezoids on the accuracy of 
+Investigate the effect of varying the number of trapezoids on the accuracy of
 the estimate and the runtime.
 
 send_trapezoid
@@ -35,31 +36,37 @@ Since there is very little communication between the processes, we would expect
 a linear scaling of performance as we increase the number of processors, right?
 
 What happens if we set the number of trapezoids is not an exact multiple of the
-number of processors requested?  Are there ways in which we can improve the code
+number of processors requested?
+Are there ways in which we can improve the code
 to deal with this?
 
 dartboard_pi_send
 -----------------
 
 In the trapezoid approach, each processor was responsible for a portion of the
-area under a curve.  What would happen if one (or more) of those processors
-were to fail while the program was running.  (You could simulate this by arranging
+area under a curve.
+What would happen if one (or more) of those processors
+were to fail while the program was running.
+(You could simulate this by arranging
 for some of the messages not to be sent/received.)
 
 The best case scenario is that the program detects the failure and automatically
 compensates (perhaps you'd like to try writing some code for this?), middling is
-the program deadlocks or crashes.  The worst case scenario is that the program
+the program deadlocks or crashes.
+The worst case scenario is that the program
 runs to completion, but gives erroneous output.
 
-This is, however, a different approach.  Programs based on randomly selected trials—
-the so called, 'monte carlo' approach—are inherently robust to problems such as
-processor failure.  This program uses a monte carlo algorithm—the dartbaord
+This is, however, a different approach.
+Programs based on randomly selected trials—the so-called 'monte carlo' approach—are inherently robust to problems such as
+processor failure.
+This program uses a monte carlo algorithm—the dartboard
 algorithm—to produce an estimate of pi.
 
 Note the use of `MPI_ANY_SOURCE` in the call the `MPI_Recv()`.
 
 ### Exercise
 
-How well does this program perform compared to the trapezoid appraoch?  What
-are the pros and cons?  For example, given a random number generator, are we
+How well does this program perform compared to the trapezoid approach?
+What are the pros and cons?
+For example, given a random number generator, are we
 guaranteed to get the same answer each time we run the code?

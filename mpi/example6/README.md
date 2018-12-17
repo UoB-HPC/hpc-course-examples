@@ -1,29 +1,35 @@
-Example 6: Composite messages
+Example 6: Composite Messages
 =============================
 
 Sending many messages between processes can significantly
-slow your programs.  Especially if the communications network
+slow your programs.
+Especially if the communications network
 has a high latency.
 
-If you need to send many pieces of information, one approch
+If you need to send many pieces of information, one approach
 to improving efficiency is to combine several pieces of
-information into a single message.  MPI offers us two ways to
-aglomorate our variables.  The first is to create a user
-derived type which can be a compound of intrinsic types.  The
+information into a single message.
+MPI offers us two ways to
+agglomerate our variables.
+The first is to create a user
+derived type which can be a compound of intrinsic types.
+The
 second is to pack a number of variables into a message buffer
 prior to transmission and unpack them again at the receiving
 end.
 
-Both of these appraoches can be very effective.  However, care
-must be taken.  Pitfalls include:
+Both of these approaches can be very effective.
+However, care
+must be taken.
+Pitfalls include:
 
-1. If we try to aglomorate too much information on a process
+1. If we try to agglomerate too much information on a process
    before transmission, we could end up delaying the
    receiving process which could have been kept busy if only
    information had been sent to them earlier.
 
 2. We should also be mindful of the computation cost of the
-   aglomoration on the sending process.  If the communication
+   agglomeration on the sending process.  If the communication
    network has a very low latency, we may have done better
    by sending the information piece-meal.
 
@@ -32,20 +38,22 @@ pack-unpack
 
 Here we pack variables into a single message buffer on the
 sending process and unpack them on the receiving process.
-This is a direct and no-nosense approach.  However, this
-appoach requires that the programmer explicitly carry
+This is a direct and no-nonsense approach.
+However, this
+approach requires that the programmer explicitly carry
 out the packing and unpacking operations, which can be
-error prone.  Also this approach is compuationally more
-expensive than its alternative should a similar message 
-be sent several times in a program. 
+error prone.
+Also this approach is computationally more
+expensive than its alternative should a similar message
+be sent several times in a program.
 
 derived-type
 ------------
 
-This approach requires more setup but is compuationally
+This approach requires more setup but is computationally
 more efficient if used several times and is less error
 prone as the compound message is automatically broken into
-it's constituent parts.
+its constituent parts.
 
 The derived-type is based around the offsets in memory
 between the storage locations of the variables concerned.

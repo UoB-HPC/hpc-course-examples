@@ -2,52 +2,57 @@ Example 8: One-sided Communication
 ==================================
 
 This directory is concerned with one-sided communications,
-also known as RMA (Remote Memory Access) operations, which
+also known as _RMA_ (Remote Memory Access) operations, which
 is also new in MPI-2.
 
 Advantage to this approach include:
 
-1. The one-sided 'put' and 'get' operations may be better
-   suited to some algorithms than the send & receive partnership, 
+1. The one-sided _put_ and _get_ operations may be better
+   suited to some algorithms than the send & receive partnership,
    resulting in potentially clearer and simpler code.
 
-2. On some modern hardware, information can be placed on- 
-   or retreived from a remote process without interupting the 
-   CPU used by that remote process.  In this way the best
+2. On some modern hardware, information can be placed on-
+   or retrieved from a remote process without interrupting the
+   CPU used by that remote process.  In this way, the best
    possible performance can be extracted from the cohort of
-   processes. 
+   processes.
 
 
 rma-trapezoid
 -------------
 
-In this program we fall back on the now very familar task of 
-numerical integration.  However, in this case we arrange for
-the processes to access the memory on the master process 
-directly, without recourse to the send and receive handshake 
-of MPI-2.  (Of course, messages must be sent along a wire 
+In this program we fall back on the now very familiar task of
+numerical integration.
+However, in this case we arrange for
+the processes to access the memory on the master process
+directly, without recourse to the send and receive handshake
+of MPI-2.
+(Of course, messages must be sent along a wire
 separating two processes, but this is hidden from the programmer
 in the case of an RMA operation.)
 
 First memory windows are created on various processes, using
-`MPI_Win_create()`. In this program we only need expose variables
-owned by the the master process.  Note, that all processes must 
+`MPI_Win_create()`.
+In this program we only need expose variables
+owned by the the master process.
+Note, that all processes must
 call `MPI_Win_create()`, as it is a collective operation, but that
 all processes other than the master declare a window of size
 zero.
 
 If a process desires to read a value for a variable from a window
-it must call `MPI_Get()`.  However, this call must be enclosed by a
-pair of calls to MPI_Win_fence().  These calls are again
-collective and act to synchronise the processes.
+it must call `MPI_Get()`.
+However, this call must be enclosed by a pair of calls to MPI_Win_fence().
+These calls are again collective and act to synchronise the processes.
 
-`MPI_Put()` operations are, of course, also possible.  However in
+`MPI_Put()` operations are, of course, also possible.
+However in
 this case we desire to accumulate our sub-totals and obligingly
-MPI-2 offers us the `MPI_Accumlate()` function, again bookended
+MPI-2 offers us the `MPI_Accumulate()` function, again bookended
 by synchronising calls to `MPI_Win_fence()`.
 
 ### Exercise
 
-- Devise a program to verify whether or not the second call to 
+- Devise a program to verify whether or not the second call to
   `MPI_Win_fence()` in an RMA access epoch acts like a barrier call,
   `MPI_Barrier()`.
