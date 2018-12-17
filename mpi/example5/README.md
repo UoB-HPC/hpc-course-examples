@@ -1,59 +1,96 @@
-Example 5: Collective Communication
-===================================
+Example 5: Communication Pattern Skeletons
+===========================================
 
-This directory contains programs which use collective communication functions.
+In this directory you will find a number of example programs showing different
+methods of communication: simple send & receive, combined send-receive, asynchronous send
+& receive and, finally, one-sided communications.
 
-broadcast
+You may find these communication 'skeletons' useful for your assignment.
+You may copy
+the skeleton and adapt it to the requirements of the assignment.
+
+I've also included an example where you can attach a debugger to a running process to
+find a deadlock.
+
+
+skeleton1
 ---------
 
-In this scenario, we would like to send some information from the
-master process to all the other processes in the communicator.
-This situation could arise if the master process had read some
-parameter settings from file, or it had received some information
-from one or more other processes and needs to coordinate the rest.
+I have used `MPI_Ssend()` to emphasise the importance of the communication pattern.
+- See what happened if you, for example, change the even processes to send to the left
+  before the right.
 
-This program contrasts the time taken to achieve this using a
-series of point-to-point communications against that used by one
-collective _broadcast_ operation.
+skeleton2
+---------
 
-### Exercise
+In this case I have used `MPI_Sendrecv()`.
+This pattern is harder to break.
+You could, of course, set `left` or `right` to an incorrect rank, and that will break it.
 
-Run the program several times using different numbers of processors
-and plot how the communication times scale over an increasing number
-of processors in the communicator.
+skeleton2-simple2d
+------------------
 
+Here, we see `MPI_Sendrecv()` used for a halo-exchange on a 2d-grid.
+This is getting more
+like what is required for the assignment.
+This is a very simple program that does only
+one halo exchange and then examines the result.
 
-reduce_trapezoid
-----------------
+skeleton2-heated-plate
+----------------------
 
-Another common scenario is one in which each process has computed a
-value which we would like to combine in some way: add, multiply,
-divide etc.
+Even more like the assignment, we now see `MPI_Sendrecv()` used to calculate values on a
+2d-grid following a time-stepping algorithm.
+Each process uses a stencil to compute
+new values for the heat distribution across a rectangular plate and the time-stepping
+proceeds until some form of convergence is reached (in this case, a fixed number of
+steps is performed).
 
-In this program we revisit the trapezoidal approach to numerical
-integration.
-Instead of sending the subtotals back to the master
-processes as a sequence of point-to-point communications, we can
-call a collective _reduce_ operation to achieve the same result,
-but more efficiently.
+skeleton3
+---------
 
+This example uses a similar pattern to skeleton2, but now uses asynchronous comms.
+**Beware, this pattern is very fragile!**
+For example, try commenting out the call to `MPI_Waitall()`, recompile and re-run.
+Errors due to missing required synchronisations will be compounded if your comms are in a loop.
 
-scatter_gather
---------------
+skeleton4
+---------
 
-This last program demonstrates two more collective operations: _scatter_ and _gather_.
+This skeleton uses RMA, i.e. _one-sided_, MPI calls to achieve a similar pattern to the other skeletons.
 
-The call to scatter chunks up a send buffer on one of the
-processes (called the _root_) and distributes those chunks to
-all the other processes.
+debugging a deadlock
+--------------------
 
-The call to gather takes chunks from all the other processes
-and collates them into a single buffer on the root process,
-i.e. it performs a mirror image of the scatter operation.
+An example gdb session:
 
-### Exercise
+```
+> cd debugging/mpi
+> mpirun -np 2 ./deadlock.exe 1
+> gdb
+```
 
-Our master send buffer contains a line from Macbeth, which
-is 66 characters long.
-Pay close attention to the contents of
-the reconstituted buffer as you vary processor count.
+With gdb started, you can begin to interrogate the program
+(see [gdb_cheat_sheet.pdf](gdb_cheat_sheet.pdf) in this dir for more on gdb commands):
+
+```
+(gdb) attach <process-id>
+(gdb) print rank
+(gdb) set debugWait = 0
+(gdb) next
+(gdb) next
+(gdb) next
+(gdb) next
+...
+```
+
+You'll see the line on which the program hangs.
+(Note that if a function does not return,
+then gdb itself will be hung too.)
+
+To detach the debugger from the running process:
+
+```
+(gdb) detach
+```
+

@@ -1,4 +1,4 @@
-Example 6: Composite Messages
+Example 7: Composite Messages
 =============================
 
 Sending many messages between processes can significantly

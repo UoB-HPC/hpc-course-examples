@@ -2,22 +2,21 @@
 # Makefile to build example MPI programs 
 #
 
-CC=mpicc
+EXE1=skeleton1.exe
+EXE2=skeleton2.exe
+EXE3=skeleton3.exe
+EXE4=skeleton4.exe
+EXE5=skeleton2-simple2d.exe
+EXE6=skeleton2-heated-plate.exe
+EXE7=deadlock.exe
+EXES=$(EXE1) $(EXE2) $(EXE3) $(EXE4) $(EXE5) $(EXE6) $(EXE7)
 
-COMP=GNU
-ifeq ($(COMP), GNU)
-  CFLAGS=-Wall
-endif
-
-EXE1=broadcast.exe
-EXE2=reduce_trapezoid.exe
-EXE3=scatter_gather.exe
-EXES=$(EXE1) $(EXE2) $(EXE3)
+CFLAGS=-Wall -g -DDEBUG
 
 all: $(EXES)
 
 $(EXES): %.exe : %.c
-	$(CC) $(CFLAGS) -o $@ $^
+	mpicc $(CFLAGS) -o $@ $^
 
 .PHONY: clean all
 

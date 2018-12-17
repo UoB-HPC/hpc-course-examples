@@ -1,4 +1,4 @@
-Example 9: Multiple Communicators
+Example 10: Multiple Communicators
 =================================
 
 Up until now, all of our programs have used a single, default

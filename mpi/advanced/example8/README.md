@@ -1,4 +1,4 @@
-Example 7: MPI File I/O
+Example 8: MPI File I/O
 =======================
 
 This directory concerns file input and output.

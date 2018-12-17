@@ -1,15 +1,25 @@
 #!/bin/bash 
+#!
+#! Sample PBS file
+#!
+#! Name of job
 
 #PBS -N MPI
 #PBS -o OUT
 #PBS -q teaching
+
+#! Number of nodes (in this case 1 node with 4 CPU cores)
+#! The total number of nodes passed to mpirun will be nodes*ppn 
+#! Second entry: Total amount of wall-clock time (true, elapsed time). 
+#! 00:05:00 indicates 05 minutes.
+
 #PBS -l nodes=1:ppn=4,walltime=00:05:00
 
 #! Mail to user if job aborts
 #PBS -m a
 
 #! application name
-application="broadcast.exe"
+application="./skeleton1.exe"
 
 #! Run options for the application
 options=""
