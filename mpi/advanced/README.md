@@ -7,7 +7,6 @@ Make sure you have gone through all the [basic examples](../) before moving on t
 Advanced Examples
 -----------------
 
-- [example6](example6/):   Collective communication.
 - [example7](example7/):   Making composite messages to send (possibly to reduce traffic).
 - [example8](example8/):   MPI file I/0.
 - [example9](example9/):   One-sided (RMA) communications.
