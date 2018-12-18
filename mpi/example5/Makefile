@@ -1,5 +1,5 @@
 #
-# Makefile to build example MPI programs 
+# Makefile to build example MPI programs
 #
 
 EXE1=skeleton1.exe
@@ -16,10 +16,10 @@ CFLAGS=-Wall -g -DDEBUG
 all: $(EXES)
 
 $(EXES): %.exe : %.c
-	mpicc $(CFLAGS) -o $@ $^
+	mpiicc $(CFLAGS) -o $@ $^
 
 .PHONY: clean all
 
 clean:
-	\rm -f $(EXES) 
+	\rm -f $(EXES)
 	\rm -f *.o

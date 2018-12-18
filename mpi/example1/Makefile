@@ -2,19 +2,14 @@
 # Makefile to build example MPI programs
 #
 
-CC=mpicc
+CC=mpiicc
 
-COMP=GNU
+CFLAGS=-Wall
 
-ifeq ($(COMP), GNU)
-  CFLAGS=-Wall
-  FFLAGS=-Wall
-endif
-
-EXES=hello_world_c
+EXES=hello_world_c.exe
 
 
-hello_world_c: hello_world.c
+hello_world_c.exe: hello_world.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 all: $(EXES)

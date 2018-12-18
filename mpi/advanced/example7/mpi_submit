@@ -1,38 +1,34 @@
-#!/bin/bash 
+#!/bin/bash
 
 #PBS -N MPI
 #PBS -o OUT
+#PBS -j oe
 #PBS -q teaching
-#PBS -l nodes=1:ppn=4,walltime=00:05:00
+#PBS -l nodes=1:ppn=16,walltime=00:05:00
 
-#! Mail to user if job aborts
-#PBS -m a
+# Exit if any subsequent command fails
+set -eu
 
-#!application name
-application="pack-unpack.exe"
+# Use Intel MPI (make sure you compile with the same module and 'mpiicc')
+module load languages/intel-compiler-16-u2
 
-#! Run options for the application
-options=""
+# Change to the working directory (default is home directory)
+cd "$PBS_O_WORKDIR"
 
-###############################################################
-### You should not have to change anything below this line ####
-###############################################################
+# Print some information about the job
+echo "Running on host: $(hostname)"
+echo "Time is: $(date)"
+echo "Directory is: $(pwd)"
+echo "PBS job ID is: $PBS_JOBID"
+echo
 
-#! change the working directory (default is home directory)
+# We request a full node but set the number of processes manually to avoid other jobs
+# running on the same node at the same time
+processes=4
+nodes=$(uniq <"$PBS_NODEFILE")
+echo "This jobs runs on the following machines: $(echo "$nodes" | tr '\n' ' ')"
+echo "$(echo "$nodes" | wc -l) nodes, $processes processes"
+echo
 
-cd $PBS_O_WORKDIR
-
-echo Running on host `hostname`
-echo Time is `date`
-echo Directory is `pwd`
-echo PBS job ID is $PBS_JOBID
-echo This jobs runs on the following machines:
-echo `cat $PBS_NODEFILE | uniq`
- 
-#! Create a machine file for MPI
-cat $PBS_NODEFILE > machine.file.$PBS_JOBID
-
-numnodes=`wc $PBS_NODEFILE | awk '{ print $1 }'`
-
-#! Run the parallel MPI executable (nodes*ppn)
-mpirun -np $numnodes -machinefile machine.file.$PBS_JOBID $application $options
+# Run the parallel MPI executable
+mpirun -np "$processes" ./pack-unpack.exe

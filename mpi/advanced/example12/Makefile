@@ -11,7 +11,7 @@ CFLAGS=-Wall -g -DDEBUG
 all: $(EXES)
 
 $(EXES): %.exe : %.c
-	mpicc $(CFLAGS) -o $@ $^
+	mpiicc $(CFLAGS) -o $@ $^
 
 .PHONY: clean all
 

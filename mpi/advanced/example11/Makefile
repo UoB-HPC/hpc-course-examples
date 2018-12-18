@@ -9,7 +9,7 @@ EXES=$(EXE1) $(EXE2)
 all: $(EXES)
 
 $(EXES): %.exe : %.c
-	mpicc -o $@ $^
+	mpiicc -o $@ $^
 
 .PHONY: clean all
 

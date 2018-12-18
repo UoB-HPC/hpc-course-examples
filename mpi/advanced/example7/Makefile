@@ -2,12 +2,9 @@
 # Makefile to build example MPI programs 
 #
 
-CC=mpicc
+CC=mpiicc
 
-COMP=GNU
-ifeq ($(COMP), GNU)
-  CFLAGS=-Wall
-endif
+CFLAGS=-Wall
 
 EXE1=pack-unpack.exe
 EXE2=derived-type.exe

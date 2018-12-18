@@ -2,12 +2,9 @@
 # Makefile to build example MPI programs 
 #
 
-CC=mpicc
+CC=mpiicc
 
-COMP=GNU
-ifeq ($(COMP), GNU)
-  CFLAGS=-Wall
-endif
+CFLAGS=-Wall
 
 
 EXE1=group_to_comm.exe

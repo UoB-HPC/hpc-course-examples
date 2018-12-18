@@ -2,25 +2,21 @@
 # Makefile to build example MPI programs
 #
 
-CXX=mpiCC
+CXX=mpiicpc
 FC=mpif77
 F90=mpif90
 
-COMP=GNU
+CFLAGS=-Wall
+FFLAGS=-Wall
 
-ifeq ($(COMP), GNU)
-  CFLAGS=-Wall
-  FFLAGS=-Wall
-endif
+EXES=hello_world_f77.exe hello_world_f90.exe hello_world_c++.exe
 
-EXES=hello_world_f77 hello_world_f90 hello_world_c++
-
-hello_world_c++: hello_world.cc
+hello_world_c++.exe: hello_world.cc
 	$(CXX) $(CFLAGS) -o $@ $^
-hello_world_f77: hello_world.f
+hello_world_f77.exe: hello_world.f
 	$(FC) $(FFLAGS) -o $@ $^
 
-hello_world_f90: hello_world.f90
+hello_world_f90.exe: hello_world.f90
 	$(F90) $(FFLAGS) -o $@ $^
 
 all: $(EXES)

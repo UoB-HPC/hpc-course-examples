@@ -12,5 +12,5 @@ Basic Examples
 - [example2](example2/):  First, point-to-point, message passing examples. An example of some deadlocking (blocking `MPI_Recv`) code is included.
 - [example3](example3/):  Numerical integration examples, which highlight choice of cohort size.
 - [example4](example4/):  Examples contrasting blocking and non-blocking function calls.
-- [example5](example5/):  Communication pattern skeletons including an example **halo exchange**.
+- [example5](example5/):  Communication pattern skeletons, including an example halo exchange.
 
