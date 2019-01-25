@@ -1,7 +1,7 @@
 MPI Examples
 ============
 
-This is a set MPI examples.
+This is a set of MPI examples.
 Listed below are the basic examples, which should be read through and attempted first.
 There are [advanced examples](advanced/) covering more difficult—and perhaps less common—topics.
 
