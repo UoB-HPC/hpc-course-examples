@@ -1,40 +1,36 @@
-#!/bin/bash 
-#!
-#! Sample PBS file
-#!
-#! Name of job
+#!/bin/bash
 
-#PBS -N OPENMP
-#PBS -joe
+#PBS -N OpenMP
+#PBS -j oe
 #PBS -o OUT
 #PBS -q teaching
-#PBS -l nodes=1:ppn=4,walltime=00:05:00
+#PBS -l nodes=1:ppn=16,walltime=00:05:00
 
-#! Mail to user if job aborts
-#PBS -m a
+# Exit if any subsequent command fails
+set -eu
 
-#! Full path to application + application name
+# Full path to application + application name
 application="./serial_pi.exe"
 
-#! Run options for the application
+# Run options for the application
 options=""
 
 ###############################################################
 ### You should not have to change anything below this line ####
 ###############################################################
 
-#! change the working directory (default is home directory)
+# Change the working directory (default is home directory)
+cd "$PBS_O_WORKDIR"
 
-cd $PBS_O_WORKDIR
+echo "Running on host: $(hostname)"
+echo "Time is: $(date)"
+echo "Directory is: $(pwd)"
+echo "PBS job ID is: $PBS_JOBID"
+echo "This jobs runs on the following machines: $(cat "$PBS_NODEFILE" | uniq)"
 
-echo Running on host `hostname`
-echo Time is `date`
-echo Directory is `pwd`
-echo PBS job ID is $PBS_JOBID
-echo This jobs runs on the following machines:
-echo `cat $PBS_NODEFILE | uniq`
- 
-numnodes=`wc $PBS_NODEFILE | awk '{ print $1 }'`
+export OMP_NUM_THREADS=4
+echo "Running $OMP_NUM_THREADS threads"
+echo
 
 #! Run the executable
 time $application $options
