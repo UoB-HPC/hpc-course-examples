@@ -5,7 +5,7 @@ EXE2=schedule.exe
 EXE3=imbalance.exe
 EXE4=numa-bad.exe
 EXE5=simd.exe
-EXES=$(EXE1) $(EXE2) $(EXE3) $(EXE4)
+EXES=$(EXE1) $(EXE2) $(EXE3) $(EXE4) regions-separate.exe regions-merged.exe
 
 # compilers and flags
 # by default we will choose GNU
@@ -34,8 +34,8 @@ all: $(EXES)
 
 # NB, you'll need a recent compiler version to compile the SIMD example
 # e.g.
-# - for GNU:   languages/gcc-5.0 
-# - for Intel: languages/intel-compiler-15
+# - for GNU:   languages/gcc-7.1.0
+# - for Intel: languages/intel-compiler-16-u2
 simd: $(EXE5)
 
 $(EXE5): simd.c

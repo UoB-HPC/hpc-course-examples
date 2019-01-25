@@ -1,43 +1,41 @@
 #
 #
-EXE1=quicksort.exe
-EXE2=quicksort_sections.exe
 
-EXES=$(EXE1) $(EXE2)
+EXE1=simple.exe
+EXE2=capricious.exe
+EXES=$(EXE2) $(EXE1)
 
 # compilers and flags
 # by default we will choose GNU
 COMP=GNU
 
 ifeq ($(COMP), GNU)
-  FC=gfortran
   CC=gcc
-  FFLAGS=-fopenmp
-  CFLAGS=-fopenmp
+  CFLAGS=-g -fopenmp -Wall
+  LDFLAGS=-lm
+#  CFLAGS+=-O3
+#  CFLAGS+=-DPRINT
+#  CFLAGS+=-DDEBUG
 endif
 
 # settings for PGI compilers
 ifeq ($(COMP), PGI)
-  FC=pgf90
   CC=pgcc
-  FFLAGS=-mp
   CFLAGS=-mp
 endif
 
 # settings for Intel compilers
 ifeq ($(COMP), INTEL)
-  FC=ifort
   CC=icc
-  FFLAGS=-openmp
   CFLAGS=-openmp
 endif
 
 all: $(EXES)
 
 $(EXES): %.exe : %.c
-	$(CC) $(CFLAGS) -O3 $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 .PHONY: all clean
 
 clean:
-	\rm -f $(EXES)
+	\rm -f $(OBJS) $(EXES)
