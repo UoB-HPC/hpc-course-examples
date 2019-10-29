@@ -1,34 +1,49 @@
 #!/bin/bash
 
-#PBS -N MPI
-#PBS -o OUT
-#PBS -j oe
-#PBS -q teaching
-#PBS -l nodes=1:ppn=16,walltime=00:05:00
+#SBATCH --nodes 1
+#SBATCH --ntasks-per-node 28
+#SBATCH --partition veryshort
+#SBATCH --reservation COMS30005
+#SBATCH --account COMS30005
+#SBATCH --job-name MPI
+#SBATCH --time 00:15:00
+#SBATCH --output OUT
+#SBATCH --exclusive
 
-# Exit if any subsequent command fails
-set -eu
+# This time, asking for 1 node with 28 tasks per node
 
 # Use Intel MPI (make sure you compile with the same module and 'mpiicc')
-module load languages/intel-compiler-16-u2
+module load languages/intel/2018-u3
 
-# Change to the working directory (default is home directory)
-cd "$PBS_O_WORKDIR"
 
 # Print some information about the job
-echo "Running on host: $(hostname)"
-echo "Time is: $(date)"
-echo "Directory is: $(pwd)"
-echo "PBS job ID is: $PBS_JOBID"
+echo "Running on host $(hostname)"
+echo "Time is $(date)"
+echo "Directory is $(pwd)"
+echo "Slurm job ID is $SLURM_JOB_ID"
+echo
+echo "This job runs on the following machines:"
+echo "$SLURM_JOB_NODELIST" | uniq
 echo
 
-# We request a full node but set the number of processes manually to avoid other jobs
-# running on the same node at the same time
-processes=4
-nodes=$(uniq <"$PBS_NODEFILE")
-echo "This jobs runs on the following machines: $(echo "$nodes" | tr '\n' ' ')"
-echo "$(echo "$nodes" | wc -l) nodes, $processes processes"
-echo
+
+# Enable using `srun` with Intel MPI
+export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
 
 # Run the parallel MPI executable
-mpirun -np "$processes" ./file-io.exe
+echo
+echo "Running individual-file.exe"
+srun ./individual-file.exe
+
+echo
+echo "Running collated.exe"
+srun ./collated.exe
+
+echo
+echo "Running MPI-file-view.exe"
+srun ./MPI-file-view.exe
+
+echo
+echo "Running MPI-file-iwrite.exe"
+srun ./MPI-file-iwrite.exe
+
