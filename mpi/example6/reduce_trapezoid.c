@@ -45,6 +45,11 @@ int main(int argc, char** argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
 
+  if (nprocs != N) {
+    fprintf(stderr,"Error: wrong number of processes (use %d processes)\n", N);
+    MPI_Abort(MPI_COMM_WORLD,1);
+  }
+
   /* width is the same for all trapezoids, on all procs */
   width = (b - a)/(double)N;
 
