@@ -32,6 +32,12 @@ int main(int argc, char* argv[])
   ** each process gets an equally sized substring
   */
   message_length = strlen(global_str) / size;
+
+  if (strlen(global_str) % size != 0) {
+    fprintf(stderr,"Error: number of processes must evenly divide string length of %lu\n", strlen(global_str));
+    MPI_Abort(MPI_COMM_WORLD,1);
+  }
+
   if (rank == MASTER) {
     printf("Message length is: %d\n", message_length); 
     printf("Total length of original string is: %d\n", (int)strlen(global_str));
