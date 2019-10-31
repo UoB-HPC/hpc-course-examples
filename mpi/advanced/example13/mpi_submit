@@ -10,9 +10,6 @@
 #SBATCH --output OUT
 #SBATCH --exclusive
 
-# Exit if any subsequent command fails
-set -eu
-
 # Use Intel MPI (make sure you compile with the same module and 'mpiicc')
 module load languages/intel/2018-u3
 
