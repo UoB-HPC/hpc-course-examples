@@ -15,7 +15,7 @@ with compilers from another).
 For simplicity, use the Intel compiler and MPI with these examples:
 
 ```bash
-module add languages/intel-compiler-16-u2
+module add languages/intel/2018-u3
 ```
 
 You will then:
