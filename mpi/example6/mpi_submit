@@ -3,8 +3,8 @@
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 28
 #SBATCH --partition veryshort
-#SBATCH --reservation COMS30005
-#SBATCH --account COMS30005
+#SBATCH --reservation COSC024002
+#SBATCH --account COSC024002
 #SBATCH --job-name MPI
 #SBATCH --time 00:15:00
 #SBATCH --output OUT
